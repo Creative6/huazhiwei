@@ -79,7 +79,7 @@
             setInterval(() => {
               this.text = this.showText.slice(0, this.count)
               if (this.count === this.showText.length) {
-                this.isfinish = true
+                // this.isfinish = true
               } else {
                 this.count = this.count + 1
               }
@@ -169,6 +169,10 @@
             `${uu0.name},${uu1.name} 被分到了半决赛A组<br/>${uu2.name},${uu3.name} 被分到了半决赛B组`
           )
           showText.push("---------------------------------------------")
+          showText.push("半决赛即将开始。。。")
+          showText.push("3！！！！")
+          showText.push("2！！！！")
+          showText.push("1！！！！")
           if (uu0.damage > uu1.damage) {
             showText.push(`半决赛A组${this.getFightWord(uu0, uu1)}`)
           } else {
@@ -187,15 +191,21 @@
 
           showText.push(`恭喜${newUU0.name}，${newUU1.name}杀入决赛！！！`)
           showText.push("---------------------------------------------")
-          showText.push("决赛开始！！！！")
           showText.push("3！！！！")
           showText.push("2！！！！")
           showText.push("1！！！！")
+          showText.push("决赛开始！！！！")
           if (newUU0.damage > newUU1.damage) {
             showText.push(`${this.getFightWord(newUU0, newUU1)}`)
           } else {
             showText.push(`${this.getFightWord(newUU1, newUU0)}`)
           }
+
+          showText.push(
+            `<div style="font-size: 30px;text-align: center;font-weight: bold;padding: 10px;">恭喜-${
+              newUU0.damage > newUU1.damage ? newUU0.name : newUU1.name
+            }-获得了冠军！！！</div>`
+          )
           this.showText = showText
         },
       })
