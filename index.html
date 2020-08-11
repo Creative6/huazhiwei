@@ -4,13 +4,201 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WDNMD!</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <style>
       body,
       html {
-        background: url(./62090605_9.gif);
-        background-size: cover;
+        font-size: 13px;
+        font-weight: lighter;
+        background: #aaa;
+      }
+
+      #app {
+        width: 500px;
+        height: 90vh;
+        margin: 0 auto;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .btn {
+        background: #eee;
+        padding: 10px;
+        text-align: center;
+        transition: 0.2s;
+        user-select: none;
+      }
+
+      .btn:hover {
+        cursor: pointer;
+      }
+
+      .btn:active {
+        background: #ccc;
+      }
+
+      .content {
+        padding: 10px;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
     </style>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <div class="btn" @click="fight" v-if="isfinish===true">START FIGHT</div>
+      <div class="content">
+        <div v-for="(item,i) in text" :key="i" v-html="item"></div>
+      </div>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          user: [
+            { name: "小花", damage: Math.random() * 1000 },
+            { name: "小芬", damage: Math.random() * 1000 },
+            { name: "奶牛", damage: Math.random() * 1000 },
+            { name: "吴凡", damage: Math.random() * 1000 },
+            { name: "海庆", damage: Math.random() * 1000 },
+            { name: "陈浩", damage: Math.random() * 1000 },
+            { name: "窝弟", damage: Math.random() * 1000 },
+            { name: "超超", damage: Math.random() * 1000 },
+          ],
+          text: [],
+          showText: [],
+          count: 0,
+          isfinish: true,
+        },
+        methods: {
+          fight() {
+            this.isfinish = false
+            this.text = ["战斗即将开始！！！"]
+            setInterval(() => {
+              this.text = this.showText.slice(0, this.count)
+              if (this.count === this.showText.length) {
+                this.isfinish = true
+              } else {
+                this.count = this.count + 1
+              }
+            }, 1000)
+          },
+          getFightWord(a, b) {
+            const aa = a.name
+            const bb = b.name
+            const damage = Math.floor(a.damage - b.damage)
+            const arr = [
+              `${aa}把${bb}从楼上丢了下去，造成了${damage}点伤害`,
+              `${aa}开车撞飞了${bb}，造成了${damage}点伤害`,
+              `${aa}把${bb}按在地上摩擦，造成了${damage}点伤害`,
+              `${aa}后入了${bb}，造成了${damage}点伤害`,
+              `${aa}扒光了${bb}的衣服，${bb}感到了羞辱，造成了${damage}点伤害`,
+              `${aa}用40米大刀捅穿了${bb}，造成了${damage}点伤害`,
+              `${aa}逼${bb}喝下了烈酒并吃下了头孢，造成了${damage}点伤害`,
+              `${aa}用打火机点燃了${bb}，造成了${damage}点伤害`,
+              `${aa}请${bb}抽了一盒烟，${bb}自动放弃了比赛`,
+              `${aa}请${bb}吃了一顿饭，${bb}自动放弃了比赛`,
+              `${aa}请${bb}看了电影，${bb}自动放弃了比赛`,
+              `${aa}在${bb}手机里安装了炸弹，${bb}使用微信时被炸死了，造成了${damage}点伤害`,
+              `${bb}试图逃跑，自动取消战绩，${aa}直接晋级`,
+              `${aa}发动了毁天灭地，秒杀了${bb}，造成了${damage}点伤害`,
+              `${bb}发动了毁天灭地，但是打在了${aa}的刃甲上，${bb}被反杀了，造成了${damage}点伤害`,
+              `${aa}吹起来一个魂之挽歌，秒杀了${bb}，造成了${damage}点伤害`,
+            ]
+            return arr[Math.floor(Math.random() * arr.length)]
+          },
+        },
+        mounted() {
+          const showText = []
+          const newUser = this.user.sort(() => Math.random() - 0.5)
+          const u0 = newUser[0]
+          const u1 = newUser[1]
+          const u2 = newUser[2]
+          const u3 = newUser[3]
+          const u4 = newUser[4]
+          const u5 = newUser[5]
+          const u6 = newUser[6]
+          const u7 = newUser[7]
+          showText.push(
+            `${u0.name},${u1.name} 被分到了A组<br/>${u2.name},${u3.name} 被分到了B组<br/>${u4.name},${u5.name} 被分到了C组<br/>${u6.name},${u7.name} 被分到了D组`
+          )
+          showText.push("---------------------------------------------")
+          if (u0.damage > u1.damage) {
+            showText.push(`A组${this.getFightWord(u0, u1)}`)
+          } else {
+            showText.push(`A组${this.getFightWord(u1, u0)}`)
+          }
+          showText.push(">>>>>>>>>>>>>>>>>")
+          if (u2.damage > u3.damage) {
+            showText.push(`B组${this.getFightWord(u2, u3)}`)
+          } else {
+            showText.push(`B组${this.getFightWord(u3, u2)}`)
+          }
+          showText.push(">>>>>>>>>>>>>>>>>")
+          if (u4.damage > u5.damage) {
+            showText.push(`C组${this.getFightWord(u4, u5)}`)
+          } else {
+            showText.push(`C组${this.getFightWord(u5, u4)}`)
+          }
+          showText.push(">>>>>>>>>>>>>>>>>")
+          if (u6.damage > u7.damage) {
+            showText.push(`D组${this.getFightWord(u6, u7)}`)
+          } else {
+            showText.push(`D组${this.getFightWord(u7, u6)}`)
+          }
+          showText.push("---------------------------------------------")
+
+          const newU0 = u0.damage > u1.damage ? u0 : u1
+          const newU1 = u2.damage > u3.damage ? u2 : u3
+          const newU2 = u4.damage > u5.damage ? u4 : u5
+          const newU3 = u6.damage > u7.damage ? u6 : u7
+
+          showText.push(
+            `恭喜${newU0.name}，${newU1.name}，${newU2.name}，${newU3.name}进入下一轮`
+          )
+          showText.push("---------------------------------------------")
+          const newArray = [newU0, newU1, newU2, newU3]
+          const newUser2 = newArray.sort(() => Math.random() - 0.5)
+          const uu0 = newUser2[0]
+          const uu1 = newUser2[1]
+          const uu2 = newUser2[2]
+          const uu3 = newUser2[3]
+          showText.push(
+            `${uu0.name},${uu1.name} 被分到了半决赛A组<br/>${uu2.name},${uu3.name} 被分到了半决赛B组`
+          )
+          showText.push("---------------------------------------------")
+          if (uu0.damage > uu1.damage) {
+            showText.push(`半决赛A组${this.getFightWord(uu0, uu1)}`)
+          } else {
+            showText.push(`半决赛A组${this.getFightWord(uu1, uu0)}`)
+          }
+          showText.push(">>>>>>>>>>>>>>>>>")
+          if (uu2.damage > uu3.damage) {
+            showText.push(`半决赛B组${this.getFightWord(uu2, uu3)}`)
+          } else {
+            showText.push(`半决赛B组${this.getFightWord(uu3, uu2)}`)
+          }
+          showText.push("---------------------------------------------")
+
+          const newUU0 = uu0.damage > uu1.damage ? uu0 : uu1
+          const newUU1 = uu2.damage > uu3.damage ? uu2 : uu3
+
+          showText.push(`恭喜${newUU0.name}，${newUU1.name}杀入决赛！！！`)
+          showText.push("---------------------------------------------")
+          showText.push("决赛开始！！！！")
+          showText.push("3！！！！")
+          showText.push("2！！！！")
+          showText.push("1！！！！")
+          if (newUU0.damage > newUU1.damage) {
+            showText.push(`${this.getFightWord(newUU0, newUU1)}`)
+          } else {
+            showText.push(`${this.getFightWord(newUU1, newUU0)}`)
+          }
+          this.showText = showText
+        },
+      })
+    </script>
+  </body>
 </html>
